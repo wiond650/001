@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册账号</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('http://wp.5ghkw.cn/view.php/ee4cfb6b68bfd0ca8fa16a8db9e8ce53.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <!-- Add reCAPTCHA script first -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Add your custom script after the reCAPTCHA script -->
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+
+            // Ensure grecaptcha is defined before using it
+            if (typeof grecaptcha !== 'undefined') {
+                // Your existing code here
+                var username = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+                var recaptchaResponse = grecaptcha.getResponse();
+
+                if (username && password && recaptchaResponse) {
+                    // Use local storage to store username and password
+                    localStorage.setItem(username, password);
+                    alert("注册成功！");
+                } else {
+                    alert("请填写所有字段并完成人机验证！");
+                }
+
+                // Reset reCAPTCHA
+                grecaptcha.reset();
+            } else {
+                console.error("Error: grecaptcha is not defined.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>注册账号</h2>
+        <form id="registrationForm" onsubmit="submitForm(event)">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password" required>
+
+            <!-- Add reCAPTCHA section -->
+            <div class="g-recaptcha" data-sitekey="6LcnghUpAAAAAOpMOSK6YM206CbdBOUQ5ABGytBZ"></div>
+
+            <button type="submit">注册</button>
+        </form>
+    </div>
+</body>
+</html>
